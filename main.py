@@ -19,8 +19,7 @@ def get_feature_functions(word_sets, labels, observes):
             else:
                 return 0
         return fun
-
-    # 转移特征矩阵
+    # 观测特征矩阵
     observation_functions = [set_membership(t, word_sets) for t in word_sets]
 
     misc_functions = [
@@ -31,8 +30,7 @@ def get_feature_functions(word_sets, labels, observes):
 
     tagval_functions = [
         lambda yp, y, x_v, i, _y=_y, _x=_x: 1 if i < len(x_v) and y == _y and x_v[i].lower() == _x else 0
-        for _y in labels
-        for _x in observes]
+        for _y in labels for _x in observes]
 
     return transition_functions + tagval_functions + observation_functions + misc_functions
 
